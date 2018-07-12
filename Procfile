@@ -1,1 +1,1 @@
-web: gunicorn app:app --log-file=-
+web: gunicorn rothko_app:app --log-file=-
