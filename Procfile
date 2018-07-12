@@ -1,1 +1,1 @@
-eb: cd src/&& gunicorn index:app --log-file=-
+web: gunicorn app:app --log-file=
