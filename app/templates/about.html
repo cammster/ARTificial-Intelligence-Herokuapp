@@ -14,7 +14,7 @@
     <link href="https://bootswatch.com/4/sketchy/bootstrap.css" rel="stylesheet">
 
     <!-- Custom styles for this template -->
-    <link href="../static/css/carousel.css" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/carousel.css') }}" rel="stylesheet">
   </head>
   <body>
 
@@ -76,7 +76,7 @@
             <div class="col-md-8 order-md-2">
 
               <h2 class="featurette-heading">Project Background</h2>
-              <p class="lead">Inspired by the paintings of Marko Rothko and Morris Louis, the goal of this application is to identify the time period of each artist's paintings using machine learning techniques.
+              <p class="lead">Inspired by the paintings of Mark Rothko and Morris Louis, the goal of this application is to identify the time period of each artist's paintings using machine learning techniques.
                 The initial intention was to use a neural network to predict the year painted for each painter's works, but this was not the best model due to a need for a larger dataset.
                 We explored various models like Linear Regression, clustering models like K Means, and classification models like Decision Tree and Random Forest. 
                 We found that predicting a year timeframe using the Decision Tree Model yielded the best results. 
