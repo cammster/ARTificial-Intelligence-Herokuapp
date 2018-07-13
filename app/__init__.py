@@ -3,22 +3,29 @@
 ###########################################################################################
 import os
 from flask import Flask
-from flask import render_template, jsonify
+from flask import render_template, jsonify, url_for
 import pandas as pd
 
 from sklearn import tree
 import pickle
 
-import metrics
+from . import metrics
 
 app = Flask(__name__)
 
+
 # The path to the Rothko and Morris models
-rothko_tree_model_file = "./models/RothkoDecisionTree.pkl"
-rothko_linear_model_file = "./models/RothkoLinearModel.pkl"
-rothko_random_forest_model_file = "./models/RothkoRandomForestModel.pkl"
-morris_tree_model_file = "./models/MorrisDecisionTree.pkl"
-morris_random_forest_model_file = "./models/MorrisRandomForestModel.pkl"
+# rothko_tree_model_file = "./models/RothkoDecisionTree.pkl"
+# rothko_linear_model_file = "./models/RothkoLinearModel.pkl"
+# rothko_random_forest_model_file = "./models/RothkoRandomForestModel.pkl"
+# morris_tree_model_file = "./models/MorrisDecisionTree.pkl"
+# morris_random_forest_model_file = "./models/MorrisRandomForestModel.pkl"
+
+rothko_tree_model_file = os.path.join(app.root_path, "./models/RothkoDecisionTree.pkl")
+rothko_linear_model_file = os.path.join(app.root_path, "./models/RothkoLinearModel.pkl")
+rothko_random_forest_model_file = os.path.join(app.root_path, "./models/RothkoRandomForestModel.pkl")
+morris_tree_model_file = os.path.join(app.root_path, "./models/MorrisDecisionTree.pkl")
+morris_random_forest_model_file = os.path.join(app.root_path, "./models/MorrisRandomForestModel.pkl")
 
 #########################################################
 # Flask route for the root/index page
@@ -38,7 +45,8 @@ def classify_rothko(imagefile):
 
     # get the metrics for the image that we need for the input features for the model
     # d = metrics.get_image_data("uploads/"+imagefile)
-    d = metrics.get_image_data("static/images/test/rothko/"+imagefile)
+    imagefile = os.path.join(app.root_path, "static/images/test/rothko/"+imagefile)
+    d = metrics.get_image_data(imagefile)
     features = [[d["shannon_entropy"][0], d["mean_color_r"][0], d["luminance"][0], d["contrast"][0], d["contour"][0] ]]
 
     # use the model to predict the year bin
@@ -74,7 +82,8 @@ def classify_rothko(imagefile):
 @app.route('/classify_morris/<imagefile>')
 def classify_morris(imagefile):
     # get the metrics for the image that we need for the input features for the model
-    d = metrics.get_image_data("static/images/test/morris/"+imagefile)
+    imagefile = os.path.join(app.root_path, "static/images/test/morris/"+imagefile)
+    d = metrics.get_image_data(imagefile)
     features = [[d["shannon_entropy"][0], d["mean_color_r"][0], d["luminance"][0], d["contrast"][0], d["contour"][0] ]]
 
     # load the morris decision tree model from disk

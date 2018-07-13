@@ -40,7 +40,7 @@ var rothkoClassification = {"(1935, 1940]":"Figurative", "(1940, 1947]": "Surrea
  */
 function classifyRothko (art) {
     // Call the flask route to classify this rothko art image
-    var route = '/classify_rothko/'+art;
+    var route = '/classify_rothko/' + art;
     d3.json(route, function(error, response) {
         console.log(response);
         var treePrediction = response.tree_predicted_year_bin[0]
